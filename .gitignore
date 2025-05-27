@@ -1,0 +1,20 @@
+# 忽略 Python 编译文件
+__pycache__/
+*.pyc
+
+# 忽略虚拟环境
+.venv/
+venv/
+
+# 忽略 Playwright 下载的浏览器（如果有）
+playwright/.cache/
+
+# 忽略 Allure 测试报告
+tests/results/allure-report/
+tests/results/allure-results/
+results/
+
+# VSCode / PyCharm 配置文件
+.vscode/
+.idea/
+
