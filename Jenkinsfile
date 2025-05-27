@@ -1,14 +1,9 @@
 pipeline {
     agent any
 
-    tools {
-        python 'Python3'       // 你在 Jenkins 全局配置中注册的 Python 名字
-    }
-
     environment {
-        VENV_DIR = 'venv'     // 虚拟环境目录
+        VENV_DIR = 'venv'
         ALLURE_RESULTS = 'tests/results/allure-results'
-        ALLURE_REPORT = 'tests/results/allure-report'
     }
 
     stages {
@@ -52,10 +47,10 @@ pipeline {
 
     post {
         always {
-            echo '🎉 构建完成，清理环境（如需要）'
+            echo '✅ 构建结束'
         }
         failure {
-            echo '❌ 构建失败，请检查日志'
+            echo '❌ 构建失败，请查看日志'
         }
     }
 }
