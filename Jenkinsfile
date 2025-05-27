@@ -45,43 +45,27 @@ pipeline {
     }
 
     post {
-        always {
-            echo '✅ 构建结束，尝试发送邮件'
+    always {
+        echo '✅ 构建结束，尝试发送邮件'
 
-            // 使用 Jenkins 凭证系统
-            withCredentials([usernamePassword(credentialsId: 'qq_email_credentials', usernameVariable: 'EMAIL_USER', passwordVariable: 'EMAIL_PASS')]) {
-                script {
-                    try {
-                        emailext (
-                            to: '330354280@qq.com',
-                            subject: "${currentBuild.currentResult}: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
-                            body: """
+        script {
+            try {
+                emailext (
+                    to: '330354280@qq.com',
+                    subject: "${currentBuild.currentResult}: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                    body: """
 构建结果：${currentBuild.currentResult}
 项目名称：${env.JOB_NAME}
 构建编号：#${env.BUILD_NUMBER}
 构建者：${env.BUILD_USER_ID ?: '未知用户'}
 构建链接：${env.BUILD_URL}
-
 请登录 Jenkins 查看详情。
-                            """,
-                            mimeType: 'text/plain',
-                            from: "${EMAIL_USER}",
-                            replyTo: "${EMAIL_USER}",
-                            smtpHost: "smtp.qq.com",
-                            smtpPort: "465",
-                            ssl: true,
-                            authUsername: "${EMAIL_USER}",
-                            authPassword: "${EMAIL_PASS}"
-                        )
-                    } catch (e) {
-                        echo "❌ 邮件发送失败: ${e.getMessage()}"
-                    }
-                }
+                    """,
+                    mimeType: 'text/plain'
+                )
+            } catch (e) {
+                echo "❌ 邮件发送失败: ${e.getMessage()}"
             }
-        }
-
-        failure {
-            echo '❌ 构建失败，请查看日志'
         }
     }
 }
