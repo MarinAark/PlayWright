@@ -260,6 +260,47 @@ def test_create_multiple_users(self, user_data):
 - 报告生成
 - 邮件通知
 
+### 🚀 Jenkins集成
+
+#### 必需的Jenkins插件
+- **Allure Jenkins Plugin** - 生成Allure测试报告
+- **HTML Publisher Plugin** - 发布HTML测试报告  
+- **Email Extension Plugin** - 发送邮件通知
+- **Git Plugin** - Git代码管理
+- **Pipeline Plugin** - 流水线支持
+
+#### 快速配置
+1. **安装Allure命令行工具**：
+   ```bash
+   # 在Jenkins服务器上运行
+   chmod +x scripts/install_allure_jenkins.sh
+   sudo ./scripts/install_allure_jenkins.sh
+   ```
+
+2. **Jenkins系统配置**：
+   - 进入 "Manage Jenkins" → "Configure System"
+   - 找到 "Allure Commandline" 部分
+   - 添加配置：Name=`Allure`, Home=`/opt/allure`
+
+3. **创建流水线任务**：
+   - 新建Pipeline任务
+   - 选择 "Pipeline script from SCM"
+   - Script Path: `Jenkinsfile`
+
+#### 本地测试
+在推送代码前，可以先本地验证Allure报告生成：
+```bash
+chmod +x scripts/test_allure_local.sh
+./scripts/test_allure_local.sh
+```
+
+#### 故障排除
+如果Jenkins无法生成Allure报告，请检查：
+1. Allure命令行工具是否正确安装
+2. Jenkins系统配置中的Allure路径
+3. 测试是否生成了 `results/allure-results/` 目录
+4. 查看详细的Jenkins配置指南：`docs/JENKINS_SETUP.md`
+
 ## 📈 扩展功能
 
 ### 已实现功能

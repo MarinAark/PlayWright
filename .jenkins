@@ -1,0 +1,25 @@
+# Jenkins配置文件
+# 确保Jenkins能正确生成Allure测试报告
+
+# 必需的Jenkins插件
+# - Allure Jenkins Plugin
+# - HTML Publisher Plugin
+# - Email Extension Plugin
+# - Git Plugin
+# - Pipeline Plugin
+
+# Allure配置
+# 在Jenkins系统配置中设置Allure命令行工具路径
+# 例如: /usr/local/bin/allure 或 /opt/allure/bin/allure
+
+# 测试结果路径配置
+# 确保Jenkins能访问以下路径:
+# - results/allure-results/ (Allure结果)
+# - results/report.html (HTML报告)
+# - test_data/ (测试数据)
+# - screenshots/ (测试截图)
+
+# 环境变量
+# PYTHON_VERSION=3.8
+# VENV_DIR=.venv
+# ALLURE_RESULTS=results/allure-results
