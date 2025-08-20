@@ -1,0 +1,17 @@
+[
+  {
+    "username": "fileuser1",
+    "email": "file1@example.com",
+    "password": "password123"
+  },
+  {
+    "username": "fileuser2",
+    "email": "file2@example.com",
+    "password": "password123"
+  },
+  {
+    "username": "fileuser3",
+    "email": "file3@example.com",
+    "password": "password123"
+  }
+]

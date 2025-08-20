@@ -18,3 +18,20 @@ results/
 .vscode/
 .idea/
 
+# 测试截图和临时文件
+screenshots/
+*.png
+*.jpg
+*.jpeg
+
+# 环境变量文件（包含敏感信息）
+.env
+
+# 测试结果和缓存
+.pytest_cache/
+.coverage
+htmlcov/
+
+# 日志文件
+*.log
+

@@ -75,6 +75,31 @@ pip install -r requirements.txt
 
 # 安装 Playwright 浏览器
 playwright install
+
+## ⚙️ 浏览器配置
+
+项目默认使用**无头模式**运行浏览器测试，以提高执行效率。如需修改配置，可以通过环境变量控制：
+
+```bash
+# 设置为有头模式（显示浏览器窗口）
+export BROWSER_HEADLESS=false
+
+# 设置浏览器超时时间（毫秒）
+export BROWSER_TIMEOUT=30000
+
+# 设置浏览器视口大小
+export BROWSER_VIEWPORT_WIDTH=1920
+export BROWSER_VIEWPORT_HEIGHT=1080
+```
+
+### 浏览器配置选项
+
+| 配置项 | 默认值 | 说明 |
+|--------|--------|------|
+| `BROWSER_HEADLESS` | `true` | 是否使用无头模式 |
+| `BROWSER_TIMEOUT` | `30000` | 页面操作超时时间（毫秒） |
+| `BROWSER_VIEWPORT_WIDTH` | `1920` | 浏览器视口宽度 |
+| `BROWSER_VIEWPORT_HEIGHT` | `1080` | 浏览器视口高度 |
 ```
 
 ## 🚀 使用方法

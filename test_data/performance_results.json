@@ -1,0 +1,17 @@
+[
+  {
+    "endpoint": "获取用户列表",
+    "response_time": 1.081147,
+    "status": "PASS"
+  },
+  {
+    "endpoint": "获取产品列表",
+    "response_time": 1.217821,
+    "status": "PASS"
+  },
+  {
+    "endpoint": "搜索产品",
+    "response_time": 0.395462,
+    "status": "PASS"
+  }
+]
