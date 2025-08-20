@@ -1,3 +1,13 @@
 playwright==1.44.0
 pytest
 allure-pytest
+requests
+pytest-html
+pytest-xdist
+jsonschema
+deepdiff
+pandas
+openpyxl
+python-dotenv
+pytest-base-url
+pytest-json-report
