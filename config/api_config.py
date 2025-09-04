@@ -1,8 +1,11 @@
 import os
-from dotenv import load_dotenv
 
-# 加载环境变量
-load_dotenv()
+# 可选导入dotenv
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass  # 如果dotenv不可用，跳过环境变量加载
 
 class APIConfig:
     """API测试配置类"""

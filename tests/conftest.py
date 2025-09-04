@@ -1,7 +1,13 @@
 import pytest
-import allure
 from utils.api_client import APIClient
 from utils.test_data import TestDataManager
+
+# 可选导入allure
+try:
+    import allure
+    ALLURE_AVAILABLE = True
+except ImportError:
+    ALLURE_AVAILABLE = False
 
 @pytest.fixture(scope="session")
 def api_client():
@@ -35,12 +41,13 @@ def api_test_context():
     yield context
     
     # 测试结束后记录统计信息
-    if context["start_time"] and context["end_time"]:
+    if context["start_time"] and context["end_time"] and ALLURE_AVAILABLE:
         duration = context["end_time"] - context["start_time"]
+        avg_response_time = sum(context['response_times']) / len(context['response_times']) if context['response_times'] else 0
         allure.attach(
             f"测试统计:\n"
             f"请求次数: {context['request_count']}\n"
-            f"平均响应时间: {sum(context['response_times']) / len(context['response_times']):.2f}s\n"
+            f"平均响应时间: {avg_response_time:.2f}s\n"
             f"总耗时: {duration:.2f}s",
             "测试统计",
             allure.attachment_type.TEXT

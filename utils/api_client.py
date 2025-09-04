@@ -1,10 +1,16 @@
 import requests
 import time
 import json
-import allure
 from typing import Dict, Any, Optional, Union
 from config.api_config import APIConfig
 from utils.logger import get_logger
+
+# 可选导入allure
+try:
+    import allure
+    ALLURE_AVAILABLE = True
+except ImportError:
+    ALLURE_AVAILABLE = False
 
 logger = get_logger(__name__)
 
@@ -23,22 +29,24 @@ class APIClient:
         url = f"{self.base_url.rstrip('/')}/{endpoint.lstrip('/')}"
         
         # 记录请求信息
-        with allure.step(f"发送 {method.upper()} 请求到 {url}"):
-            allure.attach(
-                json.dumps(kwargs, indent=2, ensure_ascii=False),
-                "请求参数",
-                allure.attachment_type.JSON
-            )
-            
-            logger.info(f"发送 {method.upper()} 请求: {url}")
-            logger.info(f"请求参数: {kwargs}")
-            
-            # 重试机制
-            for attempt in range(APIConfig.MAX_RETRIES):
-                try:
-                    response = self.session.request(method, url, **kwargs)
-                    
-                    # 记录响应信息
+        if ALLURE_AVAILABLE:
+            with allure.step(f"发送 {method.upper()} 请求到 {url}"):
+                allure.attach(
+                    json.dumps(kwargs, indent=2, ensure_ascii=False),
+                    "请求参数",
+                    allure.attachment_type.JSON
+                )
+        
+        logger.info(f"发送 {method.upper()} 请求: {url}")
+        logger.info(f"请求参数: {kwargs}")
+        
+        # 重试机制
+        for attempt in range(APIConfig.MAX_RETRIES):
+            try:
+                response = self.session.request(method, url, **kwargs)
+                
+                # 记录响应信息
+                if ALLURE_AVAILABLE:
                     allure.attach(
                         json.dumps({
                             'status_code': response.status_code,
@@ -48,18 +56,21 @@ class APIClient:
                         "响应信息",
                         allure.attachment_type.JSON
                     )
-                    
-                    logger.info(f"响应状态码: {response.status_code}")
-                    logger.info(f"响应内容: {response.text[:200]}...")
-                    
-                    return response
-                    
-                except requests.exceptions.RequestException as e:
-                    logger.warning(f"请求失败 (尝试 {attempt + 1}/{APIConfig.MAX_RETRIES}): {e}")
-                    if attempt < APIConfig.MAX_RETRIES - 1:
-                        time.sleep(APIConfig.RETRY_DELAY)
-                    else:
-                        raise
+                
+                logger.info(f"响应状态码: {response.status_code}")
+                logger.info(f"响应内容: {response.text[:200]}...")
+                
+                return response
+                
+            except requests.exceptions.RequestException as e:
+                logger.warning(f"请求失败 (尝试 {attempt + 1}/{APIConfig.MAX_RETRIES}): {e}")
+                if attempt < APIConfig.MAX_RETRIES - 1:
+                    time.sleep(APIConfig.RETRY_DELAY)
+                else:
+                    raise
+        
+        # 这里应该不会到达，但为了安全起见
+        raise Exception("所有重试都失败了")
                         
     def get(self, endpoint: str, params: Dict = None, **kwargs) -> requests.Response:
         """发送GET请求"""

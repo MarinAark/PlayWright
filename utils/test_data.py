@@ -1,8 +1,14 @@
 import json
-import pandas as pd
 import os
 from typing import List, Dict, Any, Union
 from utils.logger import get_logger
+
+# 可选导入pandas
+try:
+    import pandas as pd
+    PANDAS_AVAILABLE = True
+except ImportError:
+    PANDAS_AVAILABLE = False
 
 logger = get_logger(__name__)
 
@@ -36,6 +42,10 @@ class TestDataManager:
     
     def load_excel_data(self, filename: str, sheet_name: str = None) -> List[Dict]:
         """加载Excel格式的测试数据"""
+        if not PANDAS_AVAILABLE:
+            logger.warning("pandas不可用，无法加载Excel文件")
+            return []
+            
         file_path = os.path.join(self.data_dir, filename)
         try:
             if sheet_name:

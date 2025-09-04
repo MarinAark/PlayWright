@@ -1,13 +1,46 @@
+# 核心测试框架
 playwright==1.44.0
-pytest
-allure-pytest
-requests
-pytest-html
-pytest-xdist
-jsonschema
-deepdiff
-pandas
-openpyxl
-python-dotenv
-pytest-base-url
-pytest-json-report
+pytest>=7.0.0
+pytest-html>=3.1.0
+pytest-xdist>=2.5.0
+pytest-base-url>=2.0.0
+pytest-json-report>=1.5.0
+pytest-asyncio>=0.21.0
+
+# 报告和可视化
+allure-pytest>=2.12.0
+
+# HTTP和API测试
+requests>=2.28.0
+aiohttp>=3.8.0
+jsonschema>=4.0.0
+deepdiff>=6.0.0
+
+# 数据处理
+pandas>=1.5.0
+openpyxl>=3.0.0
+calamine>=0.1.0
+
+# 数据库支持（可选）
+# sqlite3 # 内置模块
+# mysql-connector-python>=8.0.0  # MySQL支持
+# psycopg2-binary>=2.9.0  # PostgreSQL支持
+# pymongo>=4.0.0  # MongoDB支持
+
+# 图像处理
+Pillow>=9.0.0
+
+# 配置和环境
+python-dotenv>=0.19.0
+PyYAML>=6.0.0
+
+# 工具和实用程序
+pathlib2>=2.3.0
+typing-extensions>=4.0.0
+
+# 性能和监控
+psutil>=5.9.0
+
+# 开发和调试工具（可选）
+# ipython>=8.0.0
+# pdb++>=0.10.0
