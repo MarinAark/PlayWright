@@ -1,0 +1,56 @@
+# 基础配置文件
+# 所有环境的通用配置
+
+database:
+  type: sqlite
+  database: ":memory:"
+  connection_pool_size: 10
+  timeout: 30
+
+api:
+  base_url: "https://httpbin.org"
+  timeout: 30
+  max_retries: 3
+  retry_delay: 1.0
+  verify_ssl: true
+  headers:
+    User-Agent: "PlayWright-Test-Suite/1.0"
+    Accept: "application/json"
+
+browser:
+  headless: true
+  timeout: 30000
+  viewport_width: 1920
+  viewport_height: 1080
+  browser_type: "chromium"
+  slow_mo: 0
+  devtools: false
+  args:
+    - "--no-sandbox"
+    - "--disable-dev-shm-usage"
+    - "--disable-gpu"
+    - "--disable-web-security"
+    - "--disable-features=VizDisplayCompositor"
+
+report:
+  allure_results_dir: "results/allure-results"
+  html_report_path: "results/report.html"
+  screenshot_dir: "screenshots"
+  video_dir: "videos"
+  generate_allure: true
+  generate_html: true
+  capture_screenshots: true
+  capture_videos: false
+
+performance:
+  default_concurrent_users: 10
+  default_requests_per_user: 10
+  max_response_time_ms: 5000.0
+  min_success_rate: 95.0
+  ramp_up_time: 0
+  results_dir: "performance_results"
+
+custom:
+  test_data_dir: "test_data"
+  log_level: "INFO"
+  parallel_workers: 4

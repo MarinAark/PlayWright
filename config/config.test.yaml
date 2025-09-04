@@ -1,0 +1,29 @@
+# 测试环境配置
+# 覆盖基础配置中的特定项
+
+database:
+  type: sqlite
+  database: "test_db.sqlite"
+
+api:
+  base_url: "https://httpbin.org"
+  timeout: 30
+  verify_ssl: false  # 测试环境可以关闭SSL验证
+
+browser:
+  headless: true
+  timeout: 30000
+  devtools: false
+
+report:
+  capture_screenshots: true
+  capture_videos: false
+
+performance:
+  default_concurrent_users: 5
+  default_requests_per_user: 5
+  max_response_time_ms: 3000.0
+
+custom:
+  log_level: "DEBUG"
+  test_environment: "test"

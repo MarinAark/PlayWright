@@ -1,0 +1,207 @@
+{
+  "timestamp": "2025-09-04 18:00:26",
+  "summary": {
+    "total_checks": 49,
+    "passed_checks": 43,
+    "failed_checks": 6,
+    "success_rate": 87.75510204081633
+  },
+  "details": {
+    "目录存在检查: config": {
+      "success": true,
+      "message": ""
+    },
+    "目录存在检查: tools": {
+      "success": true,
+      "message": ""
+    },
+    "目录存在检查: utils": {
+      "success": true,
+      "message": ""
+    },
+    "目录存在检查: tests": {
+      "success": true,
+      "message": ""
+    },
+    "目录存在检查: pages": {
+      "success": true,
+      "message": ""
+    },
+    "目录存在检查: test_data": {
+      "success": true,
+      "message": ""
+    },
+    "目录存在检查: results": {
+      "success": true,
+      "message": ""
+    },
+    "目录存在检查: docs": {
+      "success": true,
+      "message": ""
+    },
+    "文件存在检查: config/config_manager.py": {
+      "success": true,
+      "message": ""
+    },
+    "文件存在检查: tools/cli.py": {
+      "success": true,
+      "message": ""
+    },
+    "文件存在检查: tools/file_renamer.py": {
+      "success": true,
+      "message": ""
+    },
+    "文件存在检查: tools/image_compressor.py": {
+      "success": true,
+      "message": ""
+    },
+    "文件存在检查: tools/file_downloader.py": {
+      "success": true,
+      "message": ""
+    },
+    "文件存在检查: utils/database_client.py": {
+      "success": true,
+      "message": ""
+    },
+    "文件存在检查: utils/performance_tester.py": {
+      "success": true,
+      "message": ""
+    },
+    "文件存在检查: docs/BEST_PRACTICES.md": {
+      "success": true,
+      "message": ""
+    },
+    "文件存在检查: IMPROVEMENT_SUMMARY.md": {
+      "success": true,
+      "message": ""
+    },
+    "依赖检查: playwright": {
+      "success": false,
+      "message": "模块 playwright 未安装"
+    },
+    "依赖检查: pytest": {
+      "success": true,
+      "message": ""
+    },
+    "依赖检查: requests": {
+      "success": true,
+      "message": ""
+    },
+    "依赖检查: pandas": {
+      "success": true,
+      "message": ""
+    },
+    "依赖检查: Pillow": {
+      "success": false,
+      "message": "模块 Pillow 未安装"
+    },
+    "依赖检查: python-dotenv": {
+      "success": false,
+      "message": "模块 python-dotenv 未安装"
+    },
+    "可选依赖: yaml": {
+      "success": true,
+      "message": ""
+    },
+    "可选依赖: aiohttp": {
+      "success": true,
+      "message": ""
+    },
+    "可选依赖: mysql.connector": {
+      "success": false,
+      "message": "可选模块 mysql.connector 未安装（不影响核心功能）"
+    },
+    "可选依赖: psycopg2": {
+      "success": false,
+      "message": "可选模块 psycopg2 未安装（不影响核心功能）"
+    },
+    "可选依赖: pymongo": {
+      "success": false,
+      "message": "可选模块 pymongo 未安装（不影响核心功能）"
+    },
+    "配置管理器创建": {
+      "success": true,
+      "message": ""
+    },
+    "配置获取": {
+      "success": true,
+      "message": ""
+    },
+    "数据库配置访问": {
+      "success": true,
+      "message": ""
+    },
+    "API配置访问": {
+      "success": true,
+      "message": ""
+    },
+    "浏览器配置访问": {
+      "success": true,
+      "message": ""
+    },
+    "数据库客户端创建": {
+      "success": true,
+      "message": ""
+    },
+    "数据库连接测试": {
+      "success": true,
+      "message": ""
+    },
+    "数据库基本操作": {
+      "success": true,
+      "message": ""
+    },
+    "性能指标类创建": {
+      "success": true,
+      "message": ""
+    },
+    "性能测试器创建": {
+      "success": true,
+      "message": ""
+    },
+    "性能报告生成": {
+      "success": true,
+      "message": ""
+    },
+    "CLI工具帮助": {
+      "success": true,
+      "message": ""
+    },
+    "文件重命名工具导入": {
+      "success": true,
+      "message": ""
+    },
+    "图片压缩工具导入": {
+      "success": true,
+      "message": ""
+    },
+    "文件下载工具导入": {
+      "success": true,
+      "message": ""
+    },
+    "测试文件语法: tests/test_baidu_search.py": {
+      "success": true,
+      "message": ""
+    },
+    "测试文件语法: tests/test_api_basic.py": {
+      "success": true,
+      "message": ""
+    },
+    "测试文件语法: tests/test_database_integration.py": {
+      "success": true,
+      "message": ""
+    },
+    "测试文件语法: tests/test_performance.py": {
+      "success": true,
+      "message": ""
+    },
+    "配置系统运行测试": {
+      "success": true,
+      "message": ""
+    },
+    "数据库运行测试": {
+      "success": true,
+      "message": ""
+    }
+  }
+}

@@ -1,0 +1,38 @@
+# 生产环境配置
+# 用于生产环境的性能测试和监控
+
+database:
+  type: postgresql
+  host: "prod-db.example.com"
+  port: 5432
+  database: "prod_test_db"
+  connection_pool_size: 20
+  timeout: 60
+
+api:
+  base_url: "https://api.example.com"
+  timeout: 60
+  max_retries: 5
+  retry_delay: 2.0
+  verify_ssl: true
+
+browser:
+  headless: true
+  timeout: 60000
+  devtools: false
+
+report:
+  capture_screenshots: false  # 生产环境减少截图以提高性能
+  capture_videos: false
+
+performance:
+  default_concurrent_users: 50
+  default_requests_per_user: 20
+  max_response_time_ms: 10000.0
+  min_success_rate: 99.0
+  ramp_up_time: 30
+
+custom:
+  log_level: "INFO"
+  test_environment: "production"
+  enable_monitoring: true

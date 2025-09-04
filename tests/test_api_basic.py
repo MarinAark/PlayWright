@@ -167,7 +167,7 @@ class TestHTTPBinAPI:
             pytest.skip(f"httpbin.org服务完全不可用: {e}")
 
 @optional_allure_epic("API测试")
-@allure.feature("用户管理API")
+@optional_allure_feature("用户管理API")
 class TestUserAPI:
     """用户API测试用例"""
     
@@ -261,7 +261,7 @@ class TestUserAPI:
         logger.info("删除用户测试通过")
 
 @optional_allure_epic("API测试")
-@allure.feature("产品管理API")
+@optional_allure_feature("产品管理API")
 class TestProductAPI:
     """产品API测试用例"""
     
