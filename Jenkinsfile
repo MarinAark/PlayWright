@@ -19,11 +19,28 @@ pipeline {
             steps {
                 echo '🐍 创建虚拟环境并安装依赖'
                 sh '''
+                    # 创建虚拟环境
                     python3 -m venv ${VENV_DIR}
                     source ${VENV_DIR}/bin/activate
+                    
+                    # 升级pip
                     pip install --upgrade pip
-                    pip install -r requirements.txt
-                    playwright install
+                    
+                    # 安装核心依赖
+                    echo "📦 安装核心依赖..."
+                    pip install -r requirements-ci.txt
+                    
+                    # 尝试安装可选依赖（失败不影响构建）
+                    echo "📦 尝试安装可选依赖..."
+                    pip install -r requirements-optional.txt || echo "⚠️ 部分可选依赖安装失败，继续执行"
+                    
+                    # 安装Playwright浏览器
+                    echo "🌐 安装Playwright浏览器..."
+                    playwright install chromium --with-deps || playwright install chromium || echo "⚠️ Playwright浏览器安装可能不完整"
+                    
+                    # 显示安装的包
+                    echo "📋 已安装的包："
+                    pip list | grep -E "(pytest|playwright|allure|requests)"
                 '''
             }
         }
@@ -72,6 +89,7 @@ pipeline {
                             echo "Python版本: $(python3 --version)"
                             echo "Pytest版本: $(pytest --version)"
                             echo "当前目录: $(pwd)"
+                            echo "PATH: $PATH"
                             
                             # 确保结果目录存在
                             mkdir -p results
@@ -79,10 +97,42 @@ pipeline {
                             
                             # 清理之前的测试结果
                             rm -rf ${ALLURE_RESULTS}
+                            mkdir -p ${ALLURE_RESULTS}
                             
-                            # 运行所有测试并生成Allure结果
+                            # 检查pytest插件
+                            echo "🔌 检查pytest插件:"
+                            pytest --version
+                            python3 -m pytest --markers | grep -E "(allure|html)" || echo "⚠️ 某些pytest插件可能未安装"
+                            
+                            # 运行测试 - 分步执行以便调试
                             echo "🚀 开始执行测试..."
-                            pytest tests/ -v --alluredir=${ALLURE_RESULTS} --html=results/report.html --self-contained-html --tb=short
+                            
+                            # 首先尝试基础测试（不使用allure和html报告）
+                            echo "📋 步骤1: 执行基础测试"
+                            pytest tests/ -v --tb=short -x --maxfail=5 || BASIC_TEST_FAILED=1
+                            
+                            # 如果基础测试成功，再尝试生成报告
+                            if [ -z "$BASIC_TEST_FAILED" ]; then
+                                echo "📋 步骤2: 重新执行测试并生成报告"
+                                # 尝试生成Allure报告
+                                if command -v allure >/dev/null 2>&1; then
+                                    echo "✅ Allure工具可用，生成Allure报告"
+                                    pytest tests/ -v --alluredir=${ALLURE_RESULTS} --tb=short || echo "⚠️ Allure报告生成可能有问题"
+                                else
+                                    echo "⚠️ Allure工具不可用，跳过Allure报告"
+                                fi
+                                
+                                # 尝试生成HTML报告
+                                if python3 -c "import pytest_html" >/dev/null 2>&1; then
+                                    echo "✅ pytest-html可用，生成HTML报告"
+                                    pytest tests/ -v --html=results/report.html --self-contained-html --tb=short || echo "⚠️ HTML报告生成可能有问题"
+                                else
+                                    echo "⚠️ pytest-html不可用，跳过HTML报告"
+                                fi
+                            else
+                                echo "❌ 基础测试失败，跳过报告生成"
+                                exit 1
+                            fi
                             
                             # 显示测试结果摘要
                             echo "✅ 测试执行完成"
@@ -91,11 +141,11 @@ pipeline {
                             # 检查Allure结果
                             if [ -d "${ALLURE_RESULTS}" ]; then
                                 echo "📊 Allure结果目录内容:"
-                                ls -la ${ALLURE_RESULTS}
+                                ls -la ${ALLURE_RESULTS} || echo "目录为空"
                                 
                                 # 统计结果文件数量
-                                xml_count=$(find ${ALLURE_RESULTS} -name "*.xml" | wc -l)
-                                json_count=$(find ${ALLURE_RESULTS} -name "*.json" | wc -l)
+                                xml_count=$(find ${ALLURE_RESULTS} -name "*.xml" 2>/dev/null | wc -l)
+                                json_count=$(find ${ALLURE_RESULTS} -name "*.json" 2>/dev/null | wc -l)
                                 echo "📈 找到 ${xml_count} 个XML文件和 ${json_count} 个JSON文件"
                             else
                                 echo "❌ Allure结果目录未创建"
